@@ -4,10 +4,7 @@ import Explore from './pages/Explore';
 import Technology from './pages/Technology';
 import Journal from './pages/Journal';
 import Contact from './pages/Contact';
-<<<<<<< Updated upstream
-=======
 import Login from './pages/Login';
->>>>>>> Stashed changes
 import Chat from './pages/Chat';
 
 function App() {

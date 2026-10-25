@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, Play, Zap, User, Globe, Rocket, Orbit, Star, LogIn } from 'lucide-react';
+import { ArrowRight, Sparkles, Play, Zap, Globe, Rocket, Orbit, Star, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen w-full bg-[#020206] overflow-x-hidden font-sans text-white selection:bg-fuchsia-500/30">
       
-      {}
+      {/* 🌌 SPACE BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-20%] left-[-10%] w-[80vw] h-[80vw] bg-purple-900/20 rounded-full blur-[150px] animate-[spin_30s_linear_infinite]"></div>
         <div className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-900/20 rounded-full blur-[150px] animate-[spin_40s_linear_infinite_reverse]"></div>
@@ -26,7 +26,7 @@ export default function Home() {
 
       <main className="relative z-10 flex flex-col lg:flex-row items-center justify-between px-6 md:px-20 pt-12 pb-12 gap-8 lg:gap-0 lg:min-h-[calc(100vh-80px)]">
         
-        {}
+        {/* LEFT SIDE */}
         <div className="w-full lg:w-[55%] flex flex-col justify-center z-20 text-center lg:text-left items-center lg:items-start">
           <p className="text-cyan-400 text-[10px] md:text-xs tracking-[0.4em] uppercase mb-4 flex items-center justify-center lg:justify-start gap-2 animate-pulse">
             <Sparkles size={14} /> A Calmer Tomorrow
@@ -41,11 +41,8 @@ export default function Home() {
           <p className="text-gray-400 text-[10px] md:text-sm tracking-[0.3em] uppercase mb-8 lg:mb-12">Where Creativity <br /> Meets Intelligence</p>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-<<<<<<< Updated upstream
-            <button onClick={() => navigate('/Chat')} className="group relative flex items-center gap-3 bg-white/5 border border-cyan-400/50 text-cyan-300 px-8 py-4 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-cyan-400 hover:text-black transition-all duration-500 shadow-[0_0_20px_rgba(0,255,255,0.1)] hover:shadow-[0_0_40px_rgba(0,255,255,0.6)] transform hover:-translate-y-1 overflow-hidden">
-=======
+            {/* ✅ Fixed Conflict: navigate('/chat') */}
             <button onClick={() => navigate('/chat')} className="group relative flex items-center gap-3 bg-white/5 border border-cyan-400/50 text-cyan-300 px-8 py-4 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-cyan-400 hover:text-black transition-all duration-500 shadow-[0_0_20px_rgba(0,255,255,0.1)] hover:shadow-[0_0_40px_rgba(0,255,255,0.6)] transform hover:-translate-y-1 overflow-hidden">
->>>>>>> Stashed changes
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
               <Play size={18} className="group-hover:rotate-12 transition-transform" /> 
               View Demo 
@@ -58,7 +55,7 @@ export default function Home() {
           </div>
         </div>
 
-        {}
+        {/* RIGHT SIDE: Planet Visual */}
         <div className="w-full lg:w-[45%] relative flex items-center justify-center mt-4 lg:mt-0 lg:h-[600px]">
           <div className="relative w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] md:w-[400px] md:h-[400px] flex items-center justify-center">
             <div className="absolute inset-4 rounded-full bg-gradient-to-br from-cyan-500/40 via-blue-900/40 to-fuchsia-900/40 backdrop-blur-sm shadow-[inset_-20px_-20px_60px_rgba(0,0,0,0.8),_0_0_80px_rgba(0,255,255,0.2)] border border-white/10 overflow-hidden animate-[spin_60s_linear_infinite]">

@@ -31,11 +31,8 @@ app.post('/api/chat', async (req, res) => {
     const responseStream = await ai.models.generateContentStream({
       model: 'gemini-3.1-flash-lite', 
       contents: contents,
-<<<<<<< Updated upstream
-       config: {
-=======
      config: {
->>>>>>> Stashed changes
+
   systemInstruction: `You are Brahmastra, a powerful, intelligent, and helpful AI assistant. Your style is direct and friendly.
 
   LANGUAGE RULES:
