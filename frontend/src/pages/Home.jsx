@@ -41,7 +41,7 @@ export default function Home() {
           <p className="text-gray-400 text-[10px] md:text-sm tracking-[0.3em] uppercase mb-8 lg:mb-12">Where Creativity <br /> Meets Intelligence</p>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-            <button onClick={() => navigate('/chat')} className="group relative flex items-center gap-3 bg-white/5 border border-cyan-400/50 text-cyan-300 px-8 py-4 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-cyan-400 hover:text-black transition-all duration-500 shadow-[0_0_20px_rgba(0,255,255,0.1)] hover:shadow-[0_0_40px_rgba(0,255,255,0.6)] transform hover:-translate-y-1 overflow-hidden">
+            <button onClick={() => navigate('/Chat')} className="group relative flex items-center gap-3 bg-white/5 border border-cyan-400/50 text-cyan-300 px-8 py-4 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-cyan-400 hover:text-black transition-all duration-500 shadow-[0_0_20px_rgba(0,255,255,0.1)] hover:shadow-[0_0_40px_rgba(0,255,255,0.6)] transform hover:-translate-y-1 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
               <Play size={18} className="group-hover:rotate-12 transition-transform" /> 
               View Demo 
