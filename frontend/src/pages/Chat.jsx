@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import { ArrowLeft, Send, Zap, Mic, Image as ImageIcon, MicOff, Sparkles, User, Cpu } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -21,7 +22,7 @@ export default function Chat() {
     if (chatEndRef.current) chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
-  // Silence Detection Logic
+ 
   useEffect(() => {
     if (isVoiceMode && listening && transcript.trim().length > 0) {
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
@@ -30,7 +31,7 @@ export default function Chat() {
         if (voiceMessage.length > 0) {
           setInput('');
           resetTranscript();
-          SpeechRecognition.stopListening();
+          safeStopListening();
           sendMessage(voiceMessage);
         }
       }, 1500); 
@@ -39,6 +40,17 @@ export default function Chat() {
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     };
   }, [transcript, listening, isVoiceMode]);
+
+
+  const safeStopListening = () => {
+    try {
+      if (SpeechRecognition && typeof SpeechRecognition.stopListening === 'function') {
+        SpeechRecognition.stopListening();
+      }
+    } catch (error) {
+      console.warn("Mic stop error ignored:", error);
+    }
+  };
 
   const sendMessage = async (messageText) => {
     if (!messageText || isLoading) return;
@@ -79,6 +91,7 @@ export default function Chat() {
       setMessages(prev => [...prev, { role: 'assistant', content: "Could not connect to the backend." }]);
     } finally {
       setIsLoading(false);
+  
       if (isVoiceMode) {
         setTimeout(() => {
           resetTranscript();
@@ -91,7 +104,9 @@ export default function Chat() {
   const handleSend = async (e) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-    SpeechRecognition.stopListening(); 
+
+    safeStopListening(); 
+    
     sendMessage(input);
     setInput('');
     resetTranscript();
@@ -100,7 +115,7 @@ export default function Chat() {
   const handleMicClick = () => {
     if (isVoiceMode) {
       setIsVoiceMode(false);
-      SpeechRecognition.stopListening();
+      safeStopListening(); 
       resetTranscript();
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     } else {
@@ -126,13 +141,13 @@ export default function Chat() {
   return (
     <div className="relative min-h-screen w-full bg-[#020206] text-white font-sans selection:bg-fuchsia-500/30 flex flex-col">
       
-      {/* BACKGROUND */}
+      {}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-20%] left-[-10%] w-[80vw] h-[80vw] bg-purple-900/10 rounded-full blur-[150px]"></div>
         <div className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-900/10 rounded-full blur-[150px]"></div>
       </div>
 
-      {/* HEADER */}
+      {}
       <header className="relative z-20 w-full border-b border-white/5 bg-black/40 backdrop-blur-md shrink-0">
         <div className="max-w-5xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors">
@@ -146,11 +161,11 @@ export default function Chat() {
         </div>
       </header>
 
-      {/* CHAT CONTAINER */}
+      {}
       <main className="relative z-10 flex-1 flex justify-center w-full p-2 sm:p-4 md:p-6 overflow-hidden">
         <div className="w-full max-w-4xl flex flex-col bg-white/5 border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,255,255,0.05)] backdrop-blur-xl overflow-hidden">
           
-          {/* MESSAGES AREA */}
+          {}
           <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-6 flex flex-col gap-5 custom-scrollbar w-full">
             
             {isVoiceMode && (
@@ -170,7 +185,7 @@ export default function Chat() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex gap-3 sm:gap-4 w-full max-w-full ${msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}>
                 
-                {/* ✅ New Simple Avatars */}
+                {}
                 <div className={`shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border shadow-sm
                   ${msg.role === 'user' 
                     ? 'bg-fuchsia-500/20 border-fuchsia-500/30 text-fuchsia-400' 
@@ -178,7 +193,7 @@ export default function Chat() {
                   {msg.role === 'user' ? <User size={18} /> : <Cpu size={18} />}
                 </div>
                 
-                {/* ✅ Fixed Message Bubble (No Horizontal Scroll) */}
+                {}
                 <div className={`p-3 sm:p-4 rounded-2xl text-sm leading-relaxed border max-w-[85%] sm:max-w-[80%] break-words overflow-hidden
                   ${msg.role === 'user' 
                     ? 'bg-fuchsia-500/10 border-fuchsia-500/20 text-gray-100 rounded-tr-sm' 
@@ -193,7 +208,6 @@ export default function Chat() {
                       ol: ({node, ...props}) => <ol className="list-decimal ml-4 mb-2 space-y-1" {...props} />,
                       li: ({node, ...props}) => <li className="text-gray-300" {...props} />,
                       a: ({node, ...props}) => <a className="text-cyan-400 hover:underline break-all" {...props} />,
-                      // ✅ Code block scroller fix
                       code: ({node, inline, ...props}) => 
                         inline ? <code className="bg-cyan-500/10 text-cyan-300 px-1.5 py-0.5 rounded text-xs break-all" {...props} /> 
                                : <div className="w-full overflow-x-auto my-2"><pre className="bg-black/80 p-3 rounded-lg text-xs border border-white/10"><code {...props} /></pre></div>
@@ -220,7 +234,7 @@ export default function Chat() {
             <div ref={chatEndRef} />
           </div>
 
-          {/* INPUT AREA */}
+          {}
           <div className="p-2 sm:p-4 bg-black/40 border-t border-white/5 shrink-0">
             <form onSubmit={handleSend} className="max-w-3xl mx-auto flex gap-1 sm:gap-2 bg-white/5 rounded-xl p-1.5 sm:p-2 border border-white/10 focus-within:border-cyan-400/50 transition-all items-center">
               <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
