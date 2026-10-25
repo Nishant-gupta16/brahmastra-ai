@@ -14,7 +14,7 @@ function App() {
       <Route path="/technology" element={<Technology />} />
       <Route path="/journal" element={<Journal />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/chat" element={<Chat />} /> {/* ✅ Route */}
+      <Route path="/chat" element={<Chat />} />
     </Routes>
   );
 }
