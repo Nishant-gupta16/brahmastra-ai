@@ -10,7 +10,7 @@ The application offers both a free demo chat experience and a full authenticated
 
 | Service | Link |
 |---|
-| 🌍 Live Application |brahmastra-ai-nu.vercel.app|
+| 🌍 Live Application |[brahmastra-ai-nu.vercel.app|](https://brahmastra-ai-nu.vercel.app/)|
 
 
 ---
