@@ -9,10 +9,9 @@ The application offers both a free demo chat experience and a full authenticated
 ## 🌐 Live Demo
 
 | Service | Link |
-|---|---|
-| 🌍 Live Application | https://brahmastra-ai-2.onrender.com/ |
-| ⚙️ Backend API | https://brahmastra-ai.onrender.com/ |
-| 💻 GitHub Repository | https://github.com/Nishant-gupta16/brahmastra-ai |
+|---|
+| 🌍 Live Application |brahmastra-ai-nu.vercel.app|
+
 
 ---
 
