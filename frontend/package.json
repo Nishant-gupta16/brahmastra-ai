@@ -22,7 +22,9 @@
     "react-speech-recognition": "^3.10.0",
     "regenerator-runtime": "^0.14.1",
     "remark-gfm": "^4.0.1",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "use-ear": "^2.0.0",
+    "vosk-browser": "^0.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

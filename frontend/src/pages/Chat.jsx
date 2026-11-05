@@ -121,6 +121,34 @@ export default function Chat() {
     return () => { if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current); };
   }, [transcript, listening, isVoiceMode]);
 
+  // 🔥 MIC FIX: jab bhi voice mode band ho, actual microphone ko forcefully band karo
+  useEffect(() => {
+    if (!isVoiceMode) {
+      try {
+        if (SpeechRec?.stopListening) SpeechRec.stopListening();
+      } catch (e) { /* ignore */ }
+    }
+  }, [isVoiceMode]);
+
+  // 🔥 MIC FIX: component unmount / tab close par mic release
+  useEffect(() => {
+    const cleanup = () => {
+      try {
+        if (SpeechRec?.stopListening) SpeechRec.stopListening();
+      } catch (e) { /* ignore */ }
+    };
+    window.addEventListener('beforeunload', cleanup);
+    window.addEventListener('pagehide', cleanup);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cleanup();
+    });
+    return () => {
+      window.removeEventListener('beforeunload', cleanup);
+      window.removeEventListener('pagehide', cleanup);
+      cleanup();
+    };
+  }, []);
+
   const safeStopListening = () => { try { if (SpeechRec?.stopListening) SpeechRec.stopListening(); } catch (e) { console.warn(e); } };
   const safeStartListening = () => { try { if (SpeechRec?.startListening) SpeechRec.startListening({ continuous: true, language: 'en-IN' }); } catch (e) { console.warn(e); } };
 
@@ -153,7 +181,6 @@ export default function Chat() {
   };
 
   const startNewChat = () => {
-    // Demo — new chat is gated behind login
     setShowLoginModal(true);
   };
 
@@ -164,7 +191,6 @@ export default function Chat() {
     if (cid === chatId) { setChatId(null); setMessages([]); }
   };
 
-  // ===== Robust fetch with retries =====
   const fetchStream = async (conversationMessages, signal) => {
     const url = normalizeUrl(API_URL);
     let lastError = null;
@@ -317,7 +343,10 @@ export default function Chat() {
 
     streamAssistantReply(newMessages, activeChatId);
 
-    if (isVoiceMode) setTimeout(() => { resetTranscript(); safeStartListening(); }, 100);
+    // 🔥 MIC FIX: message bhejte hi mic ko forcibly band karo
+    safeStopListening();
+    setIsVoiceMode(false);
+    resetTranscript();
   };
 
   const handleSend = (e) => {
@@ -333,11 +362,15 @@ export default function Chat() {
   const handleMicClick = () => {
     if (limitReached) { setShowLoginModal(true); return; }
     if (isVoiceMode) {
+      // Mic already ON → band karo
       setIsVoiceMode(false);
       safeStopListening();
       resetTranscript();
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     } else {
+      // 🔥 Mic ON karte hi AI ki current speech (TTS) turant band karo
+      stopSpeaking();
+      setSpeakingId(null);
       setIsVoiceMode(true);
       resetTranscript();
       safeStartListening();
@@ -367,7 +400,16 @@ export default function Chat() {
 
   const handleSpeak = (msg) => {
     if (speakingId === msg.id) { stopSpeaking(); setSpeakingId(null); }
-    else { speak(msg.content); setSpeakingId(msg.id); }
+    else {
+      // 🔥 Manual "Read aloud" dabate hi mic band karo (conflict na ho)
+      if (isVoiceMode) {
+        setIsVoiceMode(false);
+        safeStopListening();
+        resetTranscript();
+      }
+      speak(msg.content);
+      setSpeakingId(msg.id);
+    }
   };
 
   const handleShare = async (msg) => {
@@ -484,7 +526,6 @@ export default function Chat() {
         </div>
       )}
 
-      {/* SIDEBAR */}
       <aside className={`fixed md:relative top-0 left-0 z-40 h-full flex flex-col bg-[#0a0a0a] border-r border-white/10 transition-transform duration-300 ease-out shrink-0 w-64 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:hidden'}`}>
         <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between shrink-0">
           <span className="text-sm font-semibold text-cyan-400 tracking-wider flex items-center gap-1.5">
@@ -510,7 +551,6 @@ export default function Chat() {
         </div>
       </aside>
 
-      {/* MAIN */}
       <div className="relative z-10 flex-1 flex flex-col overflow-hidden min-w-0">
         <header className="shrink-0 border-b border-white/5 bg-[#020206]/90 backdrop-blur-md">
           <div className="max-w-3xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between">

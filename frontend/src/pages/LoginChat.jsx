@@ -427,6 +427,34 @@ export default function LoginChat() {
     return () => { if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current); };
   }, [transcript, listening, isVoiceMode]);
 
+  // 🔥 MIC FIX: jab bhi voice mode band ho, actual mic ko forcefully band karo
+  useEffect(() => {
+    if (!isVoiceMode) {
+      try {
+        if (SpeechRec?.stopListening) SpeechRec.stopListening();
+      } catch (e) { /* ignore */ }
+    }
+  }, [isVoiceMode]);
+
+  // 🔥 MIC FIX: unmount / tab switch / tab close par mic release
+  useEffect(() => {
+    const cleanup = () => {
+      try {
+        if (SpeechRec?.stopListening) SpeechRec.stopListening();
+      } catch (e) { /* ignore */ }
+    };
+    window.addEventListener('beforeunload', cleanup);
+    window.addEventListener('pagehide', cleanup);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cleanup();
+    });
+    return () => {
+      window.removeEventListener('beforeunload', cleanup);
+      window.removeEventListener('pagehide', cleanup);
+      cleanup();
+    };
+  }, []);
+
   const safeStopListening = () => { try { if (SpeechRec?.stopListening) SpeechRec.stopListening(); } catch (e) { console.warn(e); } };
   const safeStartListening = () => { try { if (SpeechRec?.startListening) SpeechRec.startListening({ continuous: true, language: 'en-IN' }); } catch (e) { console.warn(e); } };
 
@@ -777,7 +805,10 @@ export default function LoginChat() {
 
     streamAssistantReply(newMessages, activeChatId);
 
-    if (isVoiceMode) setTimeout(() => { resetTranscript(); safeStartListening(); }, 100);
+    // 🔥 MIC FIX: message bhejte hi mic forcibly band, dobara start nahi
+    safeStopListening();
+    setIsVoiceMode(false);
+    resetTranscript();
   };
 
   const handleSend = (e) => {
@@ -791,8 +822,19 @@ export default function LoginChat() {
   };
 
   const handleMicClick = () => {
-    if (isVoiceMode) { setIsVoiceMode(false); safeStopListening(); resetTranscript(); if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current); }
-    else { setIsVoiceMode(true); resetTranscript(); safeStartListening(); }
+    if (isVoiceMode) {
+      setIsVoiceMode(false);
+      safeStopListening();
+      resetTranscript();
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+    } else {
+      // 🔥 Mic ON karte hi AI ki current speech (TTS) turant band karo
+      stopSpeaking();
+      setSpeakingId(null);
+      setIsVoiceMode(true);
+      resetTranscript();
+      safeStartListening();
+    }
   };
 
   const handlePhotoClick = () => { showToast('📷 Photo upload — Available Soon!', 'info'); };
@@ -829,7 +871,16 @@ export default function LoginChat() {
 
   const handleSpeak = (msg) => {
     if (speakingId === msg.id) { stopSpeaking(); setSpeakingId(null); }
-    else { speak(msg.content); setSpeakingId(msg.id || msg.content); }
+    else {
+      // 🔥 Manual "Read aloud" dabate hi mic band karo (conflict na ho)
+      if (isVoiceMode) {
+        setIsVoiceMode(false);
+        safeStopListening();
+        resetTranscript();
+      }
+      speak(msg.content);
+      setSpeakingId(msg.id || msg.content);
+    }
   };
 
   const handleShare = async (msg) => {
@@ -1810,4 +1861,4 @@ function ChatItem({ chat, active, streaming, hovered, onHover, onClick, onDelete
       </div>
     </div>
   );
-} 
+}
