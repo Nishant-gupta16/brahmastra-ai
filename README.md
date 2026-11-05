@@ -9,29 +9,11 @@ The application offers both a free demo chat experience and a full authenticated
 ## 🌐 Live Demo
 
 | Service | Link |
-|---|
 | 🌍 Live Application |[brahmastra-ai-nu.vercel.app|](https://brahmastra-ai-nu.vercel.app/)|
 
 
 ---
 
-## 📸 Project Preview
-
-Add your application screenshots inside the `screenshots/` folder.
-
-### 🏠 Home Page
-![Home Page](screenshots/home.png)
-
-### 💬 Demo Chat
-![Demo Chat](screenshots/demo-chat.png)
-
-### 🔐 Login / Signup
-![Login Page](screenshots/login.png)
-
-### 💾 Logged-in Chat
-![Login Chat](screenshots/login-chat.png)
-
----
 
 ## ✨ Features
 
