@@ -9,8 +9,7 @@ The application offers both a free demo chat experience and a full authenticated
 ## 📸 UI & Performance
 
 ### 🖥️ Home Page UI
-![Brahmastra AI Home Page](<img width="1853" height="1038" alt="Image" src="https://github.com/user-attachments/assets/0fe92bce-3984-4d68-8a6b-38efe98bf103" />)
-
+![Brahmastra AI Home Page]<img width="1853" height="1038" alt="Image" src="https://github.com/user-attachments/assets/dca6e5d3-db27-40d0-b1d4-8af02c965878" />
 ### ⚡ Lighthouse Performance Report
 ![Brahmastra AI Performance](<img width="1870" height="1041" alt="Image" src="https://github.com/user-attachments/assets/dc8c208e-12d1-470c-996c-9897a3ff1189" />)
 
