@@ -6,14 +6,23 @@ The application offers both a free demo chat experience and a full authenticated
 
 ---
 
-## 🌐 Live Demo
+## 📸 UI & Performance
 
-| Service | Link |
-| 🌍 Live Application |[brahmastra-ai-nu.vercel.app|](https://brahmastra-ai-nu.vercel.app/)|
+### 🖥️ Home Page UI
+![Brahmastra AI Home Page](<img width="1853" height="1038" alt="Image" src="https://github.com/user-attachments/assets/33afc024-8c10-4ac1-93b6-c2a60738a0c2" />)
 
+### ⚡ Lighthouse Performance Report
+![Brahmastra AI Performance](<img width="1870" height="1041" alt="Image" src="https://github.com/user-attachments/assets/dc8c208e-12d1-470c-996c-9897a3ff1189" />)
 
 ---
 
+## 🌐 Live Demo
+
+| Service | Link |
+|---|---|
+| 🌍 Live Application | [Brahmastra AI](https://brahmastra-ai-nu.vercel.app/) |
+
+---
 
 ## ✨ Features
 
@@ -190,25 +199,19 @@ brahmastra-ai/
 └── README.md
 ```
 
----
-
 ## 🗺️ Application Routes
 
 | Route | Page | Authentication | Description |
 |---|---|---|---|
-| `/` | Home | Not Required | Landing page |
-| `/explore` | Explore | Not Required | AI capabilities |
-| `/technology` | Technology | Not Required | Technology overview |
-| `/journal` | Journal | Not Required | Blog and articles |
-| `/contact` | Contact | Not Required | Contact page |
-| `/login` | Login / Signup | Not Required | Firebase authentication |
-| `/chat` | Demo Chat | Not Required | Five-message free trial |
-| `/loginchat` | LoginChat | Required | Full AI chat with history |
-
----
-
+| / | Home | Not Required | Landing page |
+| /explore | Explore | Not Required | AI capabilities |
+| /technology | Technology | Not Required | Technology overview |
+| /journal | Journal | Not Required | Blog and articles |
+| /contact | Contact | Not Required | Contact page |
+| /login | Login / Signup | Not Required | Firebase authentication |
+| /chat | Demo Chat | Not Required | Five-message free trial |
+| /loginchat | LoginChat | Required | Full AI chat with history |
 ## 🔥 Firebase Firestore Data Model
-
 Brahmastra AI uses Cloud Firestore to store authenticated users' conversations.
 
 ### Database Structure
@@ -248,7 +251,6 @@ users/
 | role | User or assistant |
 | content | Message content |
 | order | Message ordering number |
-
 ### Firestore Security Rules
 
 Use the following rules in Firebase Console → Firestore Database → Rules.
@@ -277,26 +279,30 @@ service cloud.firestore {
 
 **Security Note:**
 
-- Each authenticated user can access only their own chats.
-- Never use open test rules in production.
-- Validate data fields and types for stronger security.
-- Keep Gemini API credentials on the backend.
+Each authenticated user can access only their own chats.
 
----
+Never use open test rules in production.
+
+Validate data fields and types for stronger security.
+
+Keep Gemini API credentials on the backend.
 
 ## ⚙️ Installation and Setup
-
 Follow these steps to run Brahmastra AI locally.
 
 ### Prerequisites
 
 Make sure you have installed:
 
-- Node.js 18 or later.
-- npm.
-- Git.
-- Google Gemini API Key.
-- Firebase Account.
+Node.js 18 or later.
+
+npm.
+
+Git.
+
+Google Gemini API Key.
+
+Firebase Account.
 
 ### Step 1: Clone Repository
 
@@ -308,8 +314,6 @@ Move into the project directory:
 
 ```bash
 cd brahmastra-ai
-```
-
 ### Step 2: Backend Setup
 
 Open a terminal:
@@ -322,9 +326,9 @@ Install dependencies:
 
 ```bash
 npm install
-```
+Create a .env file inside the backend folder.
 
-Create a `.env` file inside the backend folder.
+```
 
 Add the following variables:
 
@@ -349,21 +353,22 @@ Backend local URL:
 
 ```text
 http://localhost:5000
-```
-
 ### Step 3: Get Google Gemini API Key
+Visit Google AI Studio.
 
-1. Visit Google AI Studio.
-2. Open the API Key section.
-3. Create a new API key.
-4. Copy the API key.
-5. Add it to your backend `.env` file.
+Open the API Key section.
+
+Create a new API key.
+
+Copy the API key.
+
+Add it to your backend .env file.
 
 API Key:
 
 https://aistudio.google.com/apikey
 
-**Important:** Never upload your Gemini API key to GitHub.
+Important: Never upload your Gemini API key to GitHub.
 
 ### Step 4: Frontend Setup
 
@@ -377,16 +382,18 @@ Install dependencies:
 
 ```bash
 npm install
-```
-
 ### Step 5: Firebase Configuration
+Open Firebase Console.
 
-1. Open Firebase Console.
-2. Create a Firebase project.
-3. Register a Web Application.
-4. Copy your Firebase configuration.
-5. Open `frontend/src/firebase.js`.
-6. Add your Firebase project configuration.
+Create a Firebase project.
+
+Register a Web Application.
+
+Copy your Firebase configuration.
+
+Open frontend/src/firebase.js.
+
+Add your Firebase project configuration.
 
 Example:
 
@@ -411,8 +418,7 @@ export const db = getFirestore(app);
 ```
 
 ### Step 6: Configure Backend API URL
-
-In `Chat.jsx` and `LoginChat.jsx`, configure your backend API endpoint.
+In Chat.jsx and LoginChat.jsx, configure your backend API endpoint.
 
 For local development:
 
@@ -426,7 +432,7 @@ For deployed backend:
 const API_URL = "https://brahmastra-ai.onrender.com/api/chat";
 ```
 
-If you use Vite environment variables, you can configure the URL using `VITE_API_URL` instead.
+If you use Vite environment variables, you can configure the URL using VITE_API_URL instead.
 
 ### Step 7: Start Frontend
 
@@ -440,98 +446,99 @@ Frontend local URL:
 
 ```text
 http://localhost:5173
-```
-
 Now your Brahmastra AI application should be running locally.
 
----
-
 ## 🔐 Firebase Console Configuration
-
 ### Enable Authentication
+Open Firebase Console.
 
-1. Open Firebase Console.
-2. Select your project.
-3. Navigate to Authentication.
-4. Select Sign-in Method.
-5. Enable Email/Password authentication.
+Select your project.
+
+Navigate to Authentication.
+
+Select Sign-in Method.
+
+Enable Email/Password authentication.
 
 ### Enable Cloud Firestore
+Open Firestore Database.
 
-1. Open Firestore Database.
-2. Create a database.
-3. Select your database location.
-4. Open the Rules tab.
-5. Add the security rules provided above.
-6. Publish the rules.
+Create a database.
+
+Select your database location.
+
+Open the Rules tab.
+
+Add the security rules provided above.
+
+Publish the rules.
 
 Also add your deployed frontend domain under Firebase Authentication → Settings → Authorized domains.
 
----
-
 ## 🌐 Deployment Guide
-
 ### Backend Deployment — Render
-
 Brahmastra AI backend is deployed using Render.
 
 Steps:
 
-1. Open Render.
-2. Connect your GitHub account.
-3. Select the Brahmastra AI repository.
-4. Create a new Web Service.
-5. Set Root Directory to `backend`.
-6. Set Build Command:
+Open Render.
+
+Connect your GitHub account.
+
+Select the Brahmastra AI repository.
+
+Create a new Web Service.
+
+Set Root Directory to backend.
+
+Set Build Command:
 
 ```bash
 npm install
 ```
 
-7. Set Start Command:
+Set Start Command:
 
 ```bash
 node server.js
 ```
 
-8. Add Environment Variables:
+Add Environment Variables:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
-```
-
-9. Deploy the backend.
+Deploy the backend.
 
 Live Backend:
 
 https://brahmastra-ai.onrender.com/
 
 ### Frontend Deployment — Vercel
-
 Steps:
 
-1. Open Vercel.
-2. Import the GitHub repository.
-3. Set Root Directory to `frontend`.
-4. Select Vite framework.
-5. Set Build Command:
+Open Vercel.
+
+Import the GitHub repository.
+
+Set Root Directory to frontend.
+
+Select Vite framework.
+
+Set Build Command:
 
 ```bash
 npm run build
-```
-
-6. Set Output Directory:
+Set Output Directory:
 
 ```text
 dist
-```
+Configure the backend API URL.
 
-7. Configure the backend API URL.
-8. Deploy the frontend.
+Deploy the frontend.
 
 ### Vercel SPA Configuration
 
-For direct navigation to React routes, configure `vercel.json` in the frontend deployment root.
+For direct navigation to React routes, configure vercel.json in the frontend deployment root.
 
 ```json
 {
@@ -542,39 +549,38 @@ For direct navigation to React routes, configure `vercel.json` in the frontend d
     }
   ]
 }
-```
-
 This configuration supports routes such as:
 
-- `/chat`
-- `/login`
-- `/loginchat`
-- `/explore`
+/chat
 
----
+/login
+
+/loginchat
+
+/explore
 
 ## 🔒 Environment Variables and Security
 
 | Variable | Location | Purpose |
 |---|---|---|
-| `GEMINI_API_KEY` | Backend | Gemini API authentication |
-| `PORT` | Backend | Express server port |
+| GEMINI_API_KEY | Backend | Gemini API authentication |
+| PORT | Backend | Express server port |
 | Firebase Config | Frontend | Firebase application connection |
-| `VITE_API_URL` | Frontend (optional) | Backend API endpoint |
-
+| VITE_API_URL | Frontend (optional) | Backend API endpoint |
 ### Important Security Practices
+Never commit .env files.
 
-- Never commit `.env` files.
-- Add `.env` to `.gitignore`.
-- Never expose Gemini API keys in frontend code.
-- Use Firebase Firestore Security Rules.
-- Restrict CORS to trusted frontend domains.
-- Rotate API keys immediately if accidentally exposed.
+Add .env to .gitignore.
 
----
+Never expose Gemini API keys in frontend code.
+
+Use Firebase Firestore Security Rules.
+
+Restrict CORS to trusted frontend domains.
+
+Rotate API keys immediately if accidentally exposed.
 
 ## 🧪 Local Testing Checklist
-
 - [ ] Backend starts successfully.
 - [ ] Frontend loads successfully.
 - [ ] Home page displays correctly.
@@ -590,9 +596,6 @@ This configuration supports routes such as:
 - [ ] Delete and restore functionality works.
 - [ ] Voice input works.
 - [ ] Responsive layout works on mobile and desktop.
-
----
-
 ## 🔧 Troubleshooting
 
 | Problem | Possible Solution |
@@ -607,42 +610,36 @@ This configuration supports routes such as:
 | 404 on direct routes | Verify Vercel SPA rewrite configuration. |
 | Chat history not saving | Verify Firestore configuration and write permissions. |
 | Deployment failed | Check build logs, dependencies, and environment variables. |
-
----
-
 ## 🎨 Customization
-
 ### Change Theme
-
 Update Tailwind CSS classes and configuration to customize:
 
-- Background colors.
-- Neon effects.
-- Gradients.
-- Animations.
-- Typography.
+Background colors.
+
+Neon effects.
+
+Gradients.
+
+Animations.
+
+Typography.
 
 ### Change Branding
-
 Update the project name and logo in:
 
-- `Navbar.jsx`
-- `Home.jsx`
+Navbar.jsx
+
+Home.jsx
 
 ### Customize AI Behavior
-
 Modify the Gemini system instruction in:
 
 ```text
 backend/server.js
 ```
-
 You can customize the assistant's behavior, response style, and instructions.
 
----
-
 ## 🚧 Future Roadmap
-
 - [ ] Image Upload and AI Vision Analysis.
 - [ ] Export Chat as PDF.
 - [ ] Export Chat as Markdown.
@@ -654,94 +651,68 @@ You can customize the assistant's behavior, response style, and instructions.
 - [ ] Offline Mode.
 - [ ] Light and Dark Theme Toggle.
 - [ ] Improved AI Personalization.
-
----
-
 ## 🤝 Contributing
-
 Contributions are welcome!
 
 If you want to improve Brahmastra AI:
 
-1. Fork this repository.
-2. Create a new branch.
+Fork this repository.
+
+Create a new branch.
 
 ```bash
 git checkout -b feature/your-feature
 ```
+Make your changes.
 
-3. Make your changes.
-4. Commit your changes.
+Commit your changes.
 
 ```bash
 git commit -m "Add: your feature"
 ```
-
-5. Push your branch.
+Push your branch.
 
 ```bash
 git push origin feature/your-feature
 ```
-
-6. Open a Pull Request.
+Open a Pull Request.
 
 For bugs and suggestions, visit:
 
 https://github.com/Nishant-gupta16/brahmastra-ai/issues
 
----
-
 ## 📄 License
-
 This project is intended to be distributed under the MIT License.
 
-Add a `LICENSE` file containing the full MIT License text before publishing the project under this license.
-
----
+Add a LICENSE file containing the full MIT License text before publishing the project under this license.
 
 ## 👨‍💻 Author
-
-<p align="center">
-  <strong>Nishant Gupta</strong>
-  <br />
-  Full Stack Developer
-  <br /><br />
-  <a href="https://github.com/Nishant-gupta16">
-    <img src="https://img.shields.io/badge/GitHub-Nishant--gupta16-181717?style=for-the-badge&logo=github" alt="GitHub">
-  </a>
-  <a href="https://linkedin.com/in/nishant-gupta-2483b7334">
-    <img src="https://img.shields.io/badge/LinkedIn-Nishant%20Gupta-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn">
-  </a>
-</p>
-
+<p align="center"> <strong>Nishant Gupta</strong> <br /> Full Stack Developer <br /><br /> <a href="https://github.com/Nishant-gupta16"> <img src="https://img.shields.io/badge/GitHub-Nishant--gupta16-181717?style=for-the-badge&logo=github" alt="GitHub"> </a> <a href="https://linkedin.com/in/nishant-gupta-2483b7334"> <img src="https://img.shields.io/badge/LinkedIn-Nishant%20Gupta-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn"> </a> </p>
 **Project Repository:**
 
 https://github.com/Nishant-gupta16/brahmastra-ai
 
----
-
 ## 🙏 Acknowledgements
-
 Special thanks to the following technologies and platforms:
 
-- Google Gemini API — AI-powered responses.
-- React — Frontend development.
-- Vite — Fast development environment.
-- Firebase — Authentication and database.
-- Node.js — Backend runtime.
-- Express.js — API development.
-- Tailwind CSS — Modern styling.
-- Lucide React — Icons.
-- Render — Backend hosting.
-- Vercel — Frontend deployment.
+Google Gemini API — AI-powered responses.
 
----
+React — Frontend development.
 
-<p align="center">
-  <h3 align="center">🚀 BRAHMASTRA AI</h3>
-  <p align="center">
-    Where Creativity Meets Intelligence.
-    <br />
-    Nishant Gupta
-  </p>
-</p>
+Vite — Fast development environment.
+
+Firebase — Authentication and database.
+
+Node.js — Backend runtime.
+
+Express.js — API development.
+
+Tailwind CSS — Modern styling.
+
+Lucide React — Icons.
+
+Render — Backend hosting.
+
+Vercel — Frontend deployment.
+
+<p align="center"> <h3 align="center">🚀 BRAHMASTRA AI</h3> <p align="center"> Where Creativity Meets Intelligence. <br /> Nishant Gupta </p> </p>
